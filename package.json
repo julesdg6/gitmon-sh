@@ -1,0 +1,24 @@
+{
+  "name": "gitmon-sh",
+  "version": "1.0.0",
+  "description": "A self hosted (unraid/docker) discord bot that updates a channel when github events occur",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "github",
+    "webhook",
+    "monitoring"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1"
+  }
+}
