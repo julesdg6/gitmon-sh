@@ -16,6 +16,15 @@ const client = new Client({
 
 // Initialize Express server
 const app = express();
+
+// For webhook signature verification, we need the raw body
+app.use('/webhook', express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf.toString('utf8');
+  }
+}));
+
+// Regular JSON parsing for other routes
 app.use(express.json());
 
 // Verify GitHub webhook signature
@@ -31,7 +40,7 @@ function verifySignature(req, res, next) {
   }
 
   const hmac = crypto.createHmac('sha256', WEBHOOK_SECRET);
-  const digest = 'sha256=' + hmac.update(JSON.stringify(req.body)).digest('hex');
+  const digest = 'sha256=' + hmac.update(req.rawBody).digest('hex');
 
   if (signature !== digest) {
     return res.status(401).send('Invalid signature');
